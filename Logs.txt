@@ -1,0 +1,154 @@
+PS E:\courses\Embedded\OpenTier\OpenTier> cargo test
+   Compiling embedded-recruitment-task v0.1.0 (E:\courses\Embedded\OpenTier\OpenTier)
+warning: field `id` is never read
+  --> src\server.rs:70:5
+   |
+69 | struct Worker {
+   |        ------ field in this struct
+70 |     id: usize,
+   |     ^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: `embedded-recruitment-task` (lib) generated 1 warning (1 duplicate)
+warning: field `is_running` is never read                                                                                                                                       
+   --> src\server.rs:113:5
+    |
+110 | pub struct Server {
+    |            ------ field in this struct
+...
+113 |     is_running: Arc<AtomicBool>, // Atomic flag to indicate server running state
+    |     ^^^^^^^^^^
+
+warning: method `stop` is never used
+   --> src\server.rs:118:12
+    |
+116 | impl Server {
+    | ----------- method in this implementation
+117 |     // Stop the server by setting the is_running flag to false
+118 |     pub fn stop(&self) {
+    |            ^^^^
+
+warning: `embedded-recruitment-task` (lib test) generated 1 warning                                                                                                             
+warning: `embedded-recruitment-task` (bin "embedded-recruitment-task" test) generated 3 warnings (1 duplicate)
+warning: `embedded-recruitment-task` (bin "embedded-recruitment-task") generated 3 warnings (3 duplicates)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.03s
+     Running unittests src\lib.rs (target\debug\deps\embedded_recruitment_task-97b05d43d4f3544f.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (target\debug\deps\embedded_recruitment_task-92382be754e61fe3.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\client.rs (target\debug\deps\client-cca0c5a5b6391f06.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\client_test.rs (target\debug\deps\client_test-7fb3a9e23da8850e.exe)
+
+running 5 tests
+test test_client_add_request ... FAILED
+test test_client_connection ... FAILED
+test test_multiple_echo_messages ... FAILED
+test test_client_echo_message ... FAILED
+test test_multiple_clients ... FAILED
+
+failures:
+
+---- test_client_add_request stdout ----
+thread 'test_client_add_request' panicked at src\server.rs:126:48:
+called `Result::unwrap()` on an `Err` value: Os { code: 10048, kind: AddrInUse, message: "Only one usage of each socket address (protocol/network address/port) is normally permitted." }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- test_client_connection stdout ----
+thread 'test_client_connection' panicked at src\server.rs:126:48:
+called `Result::unwrap()` on an `Err` value: Os { code: 10048, kind: AddrInUse, message: "Only one usage of each socket address (protocol/network address/port) is normally permitted." }
+
+---- test_multiple_echo_messages stdout ----
+thread 'test_multiple_echo_messages' panicked at src\server.rs:126:48:
+called `Result::unwrap()` on an `Err` value: Os { code: 10048, kind: AddrInUse, message: "Only one usage of each socket address (protocol/network address/port) is normally permitted." }
+
+---- test_client_echo_message stdout ----
+Connecting to localhost:8080
+Connected to the server!
+Sent message: EchoMessage(EchoMessage { content: "Hello, World!" })
+Worker 0 got a job; executing.
+thread 'test_client_echo_message' panicked at tests\client_test.rs:67:5:
+Failed to receive response for EchoMessage
+Worker 2 got a job; executing.
+
+---- test_multiple_clients stdout ----
+Connecting to localhost:8080
+Connected to the server!
+Connecting to localhost:8080
+Connected to the server!
+Connecting to localhost:8080
+Connected to the server!
+Sent message: EchoMessage(EchoMessage { content: "Hello, World!" })
+thread 'test_multiple_clients' panicked at tests\client_test.rs:195:13:
+Failed to receive response for EchoMessage
+
+
+failures:
+    test_client_add_request
+    test_client_connection
+    test_client_echo_message
+    test_multiple_clients
+    test_multiple_echo_messages
+
+test result: FAILED. 0 passed; 5 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+error: test failed, to rerun pass `--test client_test`
+PS E:\courses\Embedded\OpenTier\OpenTier> 
+
+PS E:\courses\Embedded\OpenTier\OpenTier> cargo run  
+   Compiling embedded-recruitment-task v0.1.0 (E:\courses\Embedded\OpenTier\OpenTier)
+warning: field `id` is never read
+  --> src\server.rs:70:5
+   |
+69 | struct Worker {
+   |        ------ field in this struct
+70 |     id: usize,
+   |     ^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: `embedded-recruitment-task` (lib) generated 1 warning
+warning: field `is_running` is never read
+   --> src\server.rs:113:5
+    |
+110 | pub struct Server {
+    |            ------ field in this struct
+...
+113 |     is_running: Arc<AtomicBool>, // Atomic flag to indicate server running state
+    |     ^^^^^^^^^^
+
+warning: method `stop` is never used
+   --> src\server.rs:118:12
+    |
+116 | impl Server {
+    | ----------- method in this implementation
+117 |     // Stop the server by setting the is_running flag to false
+118 |     pub fn stop(&self) {
+    |            ^^^^
+
+warning: `embedded-recruitment-task` (bin "embedded-recruitment-task") generated 3 warnings (1 duplicate)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.85s
+     Running `target\debug\embedded-recruitment-task.exe`
+Worker 0 got a job; executing.
+Worker 1 got a job; executing.
+Worker 2 got a job; executing.
+Worker 3 got a job; executing.
+Worker 0 got a job; executing.
+Worker 1 got a job; executing.
+Worker 2 got a job; executing.
+Worker 3 got a job; executing.
+Worker 0 got a job; executing.
+Worker 1 got a job; executing.
